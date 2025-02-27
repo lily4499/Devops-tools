@@ -1,0 +1,68 @@
+In Git, when two developers are working on the same project, Git ensures that their changes do not overwrite each other using branches and merge conflict resolution. Here’s a CLI-based explanation:
+
+Scenario: Two developers (Dev1 and Dev2) working on the same file in a Git repository.
+Step 1: Clone the Repository
+Both developers start by cloning the repository:
+
+git clone https://github.com/user/project.git
+cd project
+Step 2: Create and Switch to a New Branch (Dev1)
+Developer 1 creates a new branch for their changes:
+
+git checkout -b feature-branch-dev1
+They make some changes to a file (app.js), then add and commit:
+
+git add app.js
+git commit -m "Dev1 updated app.js"
+Push changes to remote:
+
+sh
+Copy
+Edit
+git push origin feature-branch-dev1
+Step 3: Create and Switch to Another Branch (Dev2)
+Meanwhile, Developer 2 does the same on a different branch:
+
+git checkout -b feature-branch-dev2
+They also modify the same app.js, then add and commit:
+
+git add app.js
+git commit -m "Dev2 updated app.js"
+Push changes:
+
+git push origin feature-branch-dev2
+Step 4: Merging Changes to the Main Branch
+Now, Developer 1 merges their changes first:
+
+git checkout main
+git merge feature-branch-dev1
+Push the merged changes:
+
+git push origin main
+When Developer 2 tries to merge their branch:
+
+git checkout main
+git merge feature-branch-dev2
+If Developer 1 and Developer 2 modified the same lines in app.js, Git will detect a merge conflict and prompt:
+
+CONFLICT (content): Merge conflict in app.js
+Step 5: Resolving Merge Conflicts
+Developer 2 needs to open app.js and manually resolve conflicts. Git marks conflicts like this:
+
+<<<<<<< HEAD
+// Code from the main branch
+=======
+ // Code from feature-branch-dev2
+>>>>>>> feature-branch-dev2
+After editing, add and commit:
+
+
+git add app.js
+git commit -m "Resolved merge conflict in app.js"
+git push origin main
+Now, both changes are successfully merged into the main branch without overwriting each other.
+
+Summary
+Branches prevent overwriting: Developers work on separate branches.
+Git merges and detects conflicts: If changes affect the same lines, Git warns and requires manual resolution.
+Collaboration is seamless: Developers push and pull updates to ensure their work is in sync.
